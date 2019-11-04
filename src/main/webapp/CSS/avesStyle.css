@@ -7,21 +7,91 @@ and open the template in the editor.
     Created on : 22 oct. 2019, 1:35:26
     Author     : franciscoantonio
 */
-
-[id="contenido"]
-{
-   font-family: 'PT Sans', sans-serif;
-   font-size: 16px;
-   padding:2px;
-   cursor:pointer;
-   display:block;
-   width:290px;
-   margin: 0 auto;
-   text-align:center;
+*{
+        list-style:none;
 }
-h1{
-    font-family: 'PT Sans', sans-serif;
-    font-size: 24px;
+
+
+
+html{
+    /*background: darkgrey;*/
+    background: #FAFFFA;
+    font: 150% 'McLaren', cursive;
+}
+
+body{
     text-align: center;
-    border-bottom: solid blue;
+    width: 80%;
+    /*height: 400px;*/
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5%;
+    margin-top: 5%;
+    background: #577F59;
+    color:chartreuse;
+/*    color: #FAFFFA;*/
+    padding: 5%;
+    border-radius: 150px 5px 150px 5px;
+}
+
+#opcionesIniciales{
+    float: left;
+}
+
+#opcionesIniciales a, ul{
+    color:chartreuse;
+    text-decoration: none;
+    font-size: 40px;
+    transition: 0.3s;
+}
+#opcionesIniciales a:hover{
+    color: #FAFFFA;
+    text-decoration: none;
+    font-size: 50px;
+}
+
+#pajarosIndex{
+    width: 70%;
+    height: auto;
+    float: right;
+    margin-right: -10%;
+    margin-top: -8%;
+}
+
+button{    
+    font-family:'McLaren', cursive;
+    background: none;
+    border: 0;
+    color:chartreuse;
+    font-size: 40px;
+    transition: 0.3s;
+}
+button:hover{
+    color: #FAFFFA;
+    text-decoration: none;
+    font-size: 50px;
+}
+
+/*boton insertar, eliminar, actualizar*/
+#insertar, #eliminar, #actualizar{
+    margin-left: 10%;
+    margin-top: 5%;
+}
+
+table {
+   width: 100%;
+   border-collapse: separate;
+   border-spacing: 5px;
+   background: #ADFFB2;
+   color: #fff;
+}
+td{
+   color: black;
+   background: white;
+}
+
+#listadoActualizar, #listadoEliminar{
+    font-size: 30px;
+    margin-left: 2%;
 }

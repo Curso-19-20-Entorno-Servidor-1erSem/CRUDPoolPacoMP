@@ -16,8 +16,8 @@ public class Ave implements Serializable{
     private String anilla;
     private String especie;
     private String lugar;
-    private Date fecha; //NO SE USA POR AHORA
-    private String fechaString;
+    private Date fecha; 
+   // private String fechaString;
 
     /**
      * @return the anilla
@@ -78,16 +78,16 @@ public class Ave implements Serializable{
     /**
      * @return the fechaString
      */
-    public String getFechaString() {
+/*    public String getFechaString() {
         return fechaString;
     }
-
+*/
     /**
      * @param fechaString the fechaString to set
      */
-    public void setFechaString(String fechaString) {
+  /*  public void setFechaString(String fechaString) {
         this.fechaString = fechaString;
     }
-    
+  */
     
 }

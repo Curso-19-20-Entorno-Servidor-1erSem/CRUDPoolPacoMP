@@ -5,18 +5,33 @@
  */
 package es.albarregas.controllers;
 
+import es.albarregas.beans.Ave;
+import es.albarregas.connections.Conexion;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
 /**
  *
  * @author franciscoantonio
  */
+
 @WebServlet(name = "Concluir", urlPatterns = {"/Concluir"})
 public class Concluir extends HttpServlet {
 
@@ -31,58 +46,123 @@ public class Concluir extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Concluir</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Concluir at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+
+    }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+
+        if (request.getParameter("operacion") != null) {
+            switch (request.getParameter("operacion")) {
+                case "Actualizar":
+
+                    actualizar(request, response);
+                    if (request.getParameter("operacion").equals("cancelar")) {
+                        request.getRequestDispatcher("ControladorFinal").forward(request, response);
+                    }
+                    break;
+                case "Eliminar":
+
+                    eliminar(request, response);
+                    if (request.getParameter("operacion").equals("cancelar")) {
+                        request.getRequestDispatcher("ControladorFinal").forward(request, response);
+                    }
+                    break;
+                case "cancelar":
+
+                    request.getRequestDispatcher("ControladorFinal").forward(request, response);
+                    break;
+            }//fin switch            
+        }//fin if
+
+    }
+
+    /**
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     * 
+     * Este método actualiza los datos el ave seleccionada
+     */
+    public void actualizar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String url = null;
+        DataSource datasource = null;
+        Connection conexion = null;
+        PreparedStatement preparedStatement = null;
+        String sql = null;
+
+        try {
+            //Hacemos la conexion a la BBDD
+            datasource = Conexion.crearConexion();
+            conexion = datasource.getConnection();
+
+            //obtenemos los valores del formulario
+            String anilla = request.getParameter("anilla");
+            String especie = request.getParameter("especie");
+            String lugar = request.getParameter("lugar");
+            String fecha = request.getParameter("fecha");
+            //preparamos la sentencia SQL
+            sql = "update aves set especie = ?, lugar = ?, fecha = ? where anilla = '" + anilla + "';";
+            preparedStatement = conexion.prepareStatement(sql);
+            //insertamos los valores
+            preparedStatement.setString(1, especie);
+            preparedStatement.setString(2, lugar);
+            preparedStatement.setString(3, fecha);
+            preparedStatement.executeUpdate();
+
+            //cerramos conexion
+            Conexion.cerrarConexion(conexion);
+
+            url = "JSP/update/finActualizar.jsp";
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher(url).forward(request, response);
     }
 
     /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     * 
+     * Este método elimina las aves seleccionadas.
      */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    public void eliminar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String url = null;
+        DataSource datasource = null;
+        Connection conexion = null;
+        PreparedStatement preparedStatement = null;
+        String sql = null;
+
+        try {
+            //Hacemos la conexion a la BBDD
+            datasource = Conexion.crearConexion();
+            conexion = datasource.getConnection();
+            //obtenemos los valores del formulario
+            String anilla = request.getParameter("anilla");
+            //preparamos la sentencia SQL
+            sql = "delete from aves where anilla = '"+anilla+"'";
+            preparedStatement = conexion.prepareStatement(sql);
+            preparedStatement.executeUpdate();
+
+            //NO FUNCIONA!!!
+            
+            //cerramos conexion
+            Conexion.cerrarConexion(conexion);
+
+            url = "JSP/delete/finEliminar.jsp";
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        request.getRequestDispatcher(url).forward(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
-}
+}//fin clase

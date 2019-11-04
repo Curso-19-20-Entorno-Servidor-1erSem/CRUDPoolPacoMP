@@ -1,6 +1,6 @@
 <%-- 
-    Document   : finInsertar
-    Created on : 31 oct. 2019, 1:04:32
+    Document   : error
+    Created on : 4 nov. 2019, 1:26:31
     Author     : franciscoantonio
 --%>
 
@@ -9,9 +9,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Upsss ¡¡¡¡¡¡¡¡</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Upppppsssss!!!!!!!</h1>
     </body>
 </html>
