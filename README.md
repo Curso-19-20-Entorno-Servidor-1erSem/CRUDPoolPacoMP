@@ -1,5 +1,5 @@
-# CRUDPoolFranciscoAMP
-Proyecto CRUD: Create, Read, Unifique, Delete.
+# CRUDPoolPacoMP
+Proyecto CRUD: Create, Read, Unifique, Delete. Se renombra proyecto. Nombre del anterior Proyecto: CRUDFranciscoAMP.
 
 ## Introducción.
 Creación de proyecto **CRUDPoolFranciscoAMP** en el que se crean, actualizan, eliminan y muestran datos de las aves de la tabla aves de la base de datos *pruebajava*.
